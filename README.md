@@ -43,12 +43,7 @@ Shared sensor data is protected using:
 
 - FreeRTOS Mutex (`SemaphoreHandle_t`)
 - Thread-safe shared telemetry structure
-
-### Scheduling
-
-The system uses preemptive multitasking to allow multiple real-time tasks to execute concurrently without blocking one another.
-
-```mermaid
+  ```mermaid
 flowchart TB
 
     subgraph "ESP32-S3 (ESP-IDF)"
@@ -74,6 +69,37 @@ flowchart TB
         MUTEX --> DATA
         DATA --> MQTT
     end
+```
+
+### Scheduling
+
+The system uses preemptive multitasking to allow multiple real-time tasks to execute concurrently without blocking one another.
+
+## FreeRTOS Task Timing Diagram
+
+```mermaid
+sequenceDiagram
+
+    participant Scheduler
+    participant LSM6DSO Task
+    participant DHT11 Task
+    participant MQTT Task
+
+    Scheduler->>LSM6DSO Task: Run (100 ms)
+    LSM6DSO Task->>LSM6DSO Task: Read IMU
+    LSM6DSO Task->>LSM6DSO Task: Compute Vibration
+    LSM6DSO Task-->>Scheduler: vTaskDelay()
+
+    Scheduler->>DHT11 Task: Run (2 s)
+    DHT11 Task->>DHT11 Task: Read Temp/Humidity
+    DHT11 Task-->>Scheduler: vTaskDelay()
+
+    Scheduler->>MQTT Task: Run (2 s)
+    MQTT Task->>MQTT Task: Lock Mutex
+    MQTT Task->>MQTT Task: Read Shared Data
+    MQTT Task->>MQTT Task: Publish to AWS IoT
+    MQTT Task->>MQTT Task: Unlock Mutex
+    MQTT Task-->>Scheduler: vTaskDelay()
 ```
 
 ### Advantages
