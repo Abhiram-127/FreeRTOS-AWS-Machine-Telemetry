@@ -115,7 +115,8 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
 ## IoT
 
 - MQTT Protocol
-    -MQTT TEST CLIENT OUTPUT :
+
+    MQTT TEST CLIENT OUTPUT :
     ![lambda1](lambda2.png)
 - Secure TLS Communication
 - AWS IoT Core
