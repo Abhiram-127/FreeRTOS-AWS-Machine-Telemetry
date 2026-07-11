@@ -11,8 +11,8 @@
 #include "esp_netif.h"
 #include "nvs_flash.h"
 
-#define WIFI_SSID      "Ftth#Krishna nivas"
-#define WIFI_PASSWORD  "9566262363"
+#define WIFI_SSID      "wifi name"
+#define WIFI_PASSWORD  "password"
 
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
