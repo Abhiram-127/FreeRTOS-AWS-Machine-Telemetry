@@ -64,7 +64,9 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
                   - TLS (mbedTLS)
                   - Event Loop
                   - Logging (ESP_LOGI / ESP_LOGE)
-
+  
+- # esp-idf serial monitor output  
+    ![esp-idf serial monitor](rtos_output.png)
 - # Cloud Architecture
 
                             ESP32-S3
