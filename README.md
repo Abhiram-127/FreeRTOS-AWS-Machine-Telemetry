@@ -48,6 +48,34 @@ Shared sensor data is protected using:
 
 The system uses preemptive multitasking to allow multiple real-time tasks to execute concurrently without blocking one another.
 
+```mermaid
+flowchart TB
+
+    subgraph "ESP32-S3 (ESP-IDF)"
+        SCH[FreeRTOS Scheduler]
+
+        WIFI["WiFi Task"]
+        LSM["LSM6DSO Task"]
+        DHT["DHT11 Task"]
+        MQTT["MQTT Publish Task"]
+
+        MUTEX[(Mutex)]
+        DATA[[Shared Sensor Data]]
+
+        SCH --> WIFI
+        SCH --> LSM
+        SCH --> DHT
+        SCH --> MQTT
+
+        LSM --> MUTEX
+        DHT --> MUTEX
+        MQTT --> MUTEX
+
+        MUTEX --> DATA
+        DATA --> MQTT
+    end
+```
+
 ### Advantages
 
 - Non-blocking firmware architecture
