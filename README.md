@@ -146,6 +146,9 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
 - Recharts
 - Axios
 
+## Hardware image 
+  ![lambda1](lambda1.png)
+
 - # Key Learning Outcomes
 
 Through this project I learned:
