@@ -43,7 +43,7 @@ Shared sensor data is protected using:
 
 - FreeRTOS Mutex (`SemaphoreHandle_t`)
 - Thread-safe shared telemetry structure
-  ```mermaid
+ ```mermaid
 flowchart TB
 
     subgraph "ESP32-S3 (ESP-IDF)"
