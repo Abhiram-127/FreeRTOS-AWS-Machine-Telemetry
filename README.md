@@ -43,33 +43,8 @@ Shared sensor data is protected using:
 
 - FreeRTOS Mutex (`SemaphoreHandle_t`)
 - Thread-safe shared telemetry structure
- ```mermaid
-flowchart TB
+  <img width="1440" height="1240" alt="image" src="https://github.com/user-attachments/assets/59c0b4bd-a52c-4531-854f-65f1059f9892" />
 
-    subgraph "ESP32-S3 (ESP-IDF)"
-        SCH[FreeRTOS Scheduler]
-
-        WIFI["WiFi Task"]
-        LSM["LSM6DSO Task"]
-        DHT["DHT11 Task"]
-        MQTT["MQTT Publish Task"]
-
-        MUTEX[(Mutex)]
-        DATA[[Shared Sensor Data]]
-
-        SCH --> WIFI
-        SCH --> LSM
-        SCH --> DHT
-        SCH --> MQTT
-
-        LSM --> MUTEX
-        DHT --> MUTEX
-        MQTT --> MUTEX
-
-        MUTEX --> DATA
-        DATA --> MQTT
-    end
-```
 
 ### Scheduling
 
