@@ -13,6 +13,9 @@
 - Live monitoring dashboard developed in **React**.
 - Modular firmware architecture suitable for future expansion.
 
+- ![Dashboard](dashboard1.png)
+- ![Dashboard](dashboard2.png)
+
 - # FreeRTOS Design
 
 The firmware is implemented using the FreeRTOS kernel provided by ESP-IDF.
@@ -93,7 +96,7 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
                             
                             ↓
                             
-                            React Dashboard
+                            React Dashboard  
 
 # Skills Demonstrated
 
