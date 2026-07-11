@@ -52,29 +52,39 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
 
 ## FreeRTOS Task Timing Diagram
 
-```mermaid
+ ```mermaid
 sequenceDiagram
+    participant IMU as imu_task (prio 5)
+    participant DHT as dht_task (prio 4)
+    participant MQTT as mqtt_task (prio 4)
+    participant MTX as sensor_mutex
+    participant AWS as AWS IoT Core
 
-    participant Scheduler
-    participant LSM6DSO Task
-    participant DHT11 Task
-    participant MQTT Task
+    Note over IMU,AWS: Each loop is independent, preempted by priority - not a strict round robin
 
-    Scheduler->>LSM6DSO Task: Run (100 ms)
-    LSM6DSO Task->>LSM6DSO Task: Read IMU
-    LSM6DSO Task->>LSM6DSO Task: Compute Vibration
-    LSM6DSO Task-->>Scheduler: vTaskDelay()
+    IMU->>IMU: Read IMU over SPI, compute vibration delta
+    IMU->>MTX: Lock
+    IMU->>MTX: Write accel/gyro/vibration/alert
+    IMU->>MTX: Unlock
+    IMU->>IMU: vTaskDelay(100ms)
 
-    Scheduler->>DHT11 Task: Run (2 s)
-    DHT11 Task->>DHT11 Task: Read Temp/Humidity
-    DHT11 Task-->>Scheduler: vTaskDelay()
+    DHT->>DHT: Read temp/humidity
+    DHT->>MTX: Lock
+    DHT->>MTX: Write temperature/humidity
+    DHT->>MTX: Unlock
+    DHT->>DHT: vTaskDelay(2s)
 
-    Scheduler->>MQTT Task: Run (2 s)
-    MQTT Task->>MQTT Task: Lock Mutex
-    MQTT Task->>MQTT Task: Read Shared Data
-    MQTT Task->>MQTT Task: Publish to AWS IoT
-    MQTT Task->>MQTT Task: Unlock Mutex
-    MQTT Task-->>Scheduler: vTaskDelay()
+    MQTT->>MTX: Lock
+    MQTT->>MQTT: Copy sensor fields into local payload buffer
+    MQTT->>MTX: Unlock
+    MQTT->>AWS: Publish telemetry (mqtts, outside lock)
+    MQTT->>MTX: Lock
+    MQTT->>MQTT: Read sensor.alert
+    MQTT->>MTX: Unlock
+    alt alert rising edge
+        MQTT->>AWS: Publish alert
+    end
+    MQTT->>MQTT: vTaskDelay(2s)
 ```
 
 ### Advantages
