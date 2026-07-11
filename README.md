@@ -147,7 +147,7 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
 - Axios
 
 ## Hardware image 
-  ![lambda1](lambda1.png)
+  ![hardware_image](hardware_image.png)
 
 - # Key Learning Outcomes
 
