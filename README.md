@@ -115,6 +115,8 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
 ## IoT
 
 - MQTT Protocol
+    MQTT TEST CLIENT OUTPUT :
+    ![lambda1](lambda2.png)
 - Secure TLS Communication
 - AWS IoT Core
 - Device Certificates
@@ -123,9 +125,19 @@ The system uses preemptive multitasking to allow multiple real-time tasks to exe
 ## Cloud
 
 - AWS Lambda
-- DynamoDB
-- API Gateway
+   
+  IndustrialMonitorHandler Lambda function
+  ![lambda1](lambda1.png)
 
+  GetLatestSensorData Lambda function
+  ![lambda1](lambda3.png)
+  ![lambda1](lambda4.png)
+  
+- DynamoDB
+    ![dynamoDBtable](dynamoDBtable.png)
+    ![dynamoDBtable](dynamoDBtable2.png)
+- API Gateway
+  
 ## Frontend
 
 - React
